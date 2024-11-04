@@ -1,0 +1,6 @@
+ul
+  each mystery in mysteries
+    li
+      h2= mystery.title
+      p= mystery.description
+      a(href=`/mysteries/${mystery.id}`) View Mystery
