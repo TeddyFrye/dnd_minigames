@@ -1,0 +1,27 @@
+extends layout.pug
+
+block content
+  h1 Featured Mysteries
+  if mysteries && mysteries.length
+    ul
+      each mystery in mysteries
+        li
+          h2= mystery.title
+          p= mystery.description
+          a(href=`/mysteries/${mystery.id}`) View Mystery
+  else
+    p No mysteries found.
+
+  if totalPages > 1
+    .pagination
+      if currentPage > 1
+        a(href=`/?page=${currentPage - 1}`) Previous
+      else
+        span Previous
+
+      | Page #{currentPage} of #{totalPages}
+
+      if currentPage < totalPages
+        a(href=`/?page=${currentPage + 1}`) Next
+      else
+        span Next

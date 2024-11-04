@@ -1,0 +1,36 @@
+extends layout
+
+block content
+  h1 Manage Clues
+
+  h2 Existing Clues
+  ul
+    each clue in clues
+      li
+        form(action=`/clues/${clue.id}/edit` method="POST" style="display: inline;")
+          input(type="text" name="name" value=clue.name required)
+          button(type="submit") Update
+        form(action=`/clues/${clue.id}/delete` method="POST" style="display: inline; margin-left: 10px;")
+          button(type="submit") Delete
+
+  // Pagination Controls
+  if totalPages > 1
+    .pagination(style="margin-top: 20px;")
+      if currentPage > 1
+        a.page-link(href=`/clues/manage?page=${currentPage - 1}` style="margin-right: 5px;") Previous
+      each pageNumber in [...Array(totalPages).keys()].map(n => n + 1)
+        if pageNumber === currentPage
+          span.page-current(style="margin: 0 5px;") #{pageNumber}
+        else
+          a.page-link(href=`/clues/manage?page=${pageNumber}` style="margin: 0 5px;") #{pageNumber}
+      if currentPage < totalPages
+        a.page-link(href=`/clues/manage?page=${currentPage + 1}` style="margin-left: 5px;") Next
+
+  h2 Add New Clue
+  form(action="/clues/add" method="POST")
+    div
+      label(for="name") Clue Name:
+      input(type="text" name="name" required)
+    button(type="submit") Add Clue
+
+  a(href="/") Back to Home

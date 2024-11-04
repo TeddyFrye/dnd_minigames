@@ -1,0 +1,60 @@
+extends layout
+
+block content
+  h1 Add New Mystery
+
+  if messages.error
+    each error in messages.error
+      div.alert.alert-danger= error
+
+  if messages.success
+    each success in messages.success
+      div.alert.alert-success= success
+
+  form(action="/mysteries" method="POST" id="add-mystery-form")
+    div
+      label(for="title") Mystery Title:
+      input(type="text" name="title" value=(title || '') required)
+    div
+      label(for="description") Description:
+      textarea(name="description" required)= description || ''
+
+    h2 Select Clues
+    ul
+      each clue in clues
+        li
+          input(type="checkbox" name=`clues[${clue.id}][checked]` value="true")
+          label(for=`clues[${clue.id}]`) #{clue.name}
+          input(type="hidden" name=`clues[${clue.id}][id]` value=clue.id)
+          input(type="text" name=`clues[${clue.id}][quantity]` placeholder="Quantity" class="clue-quantity")
+
+    div(id="quantity-error" style="color: red; display: none;") Quantity must be a positive number greater than zero.
+
+    button(type="submit") Add Mystery
+
+block scripts
+  script.
+    document.addEventListener("DOMContentLoaded", function() {
+      const addMysteryForm = document.getElementById("add-mystery-form");
+      const quantityInputs = document.querySelectorAll(".clue-quantity");
+      const quantityError = document.getElementById("quantity-error");
+
+      addMysteryForm.addEventListener("submit", function(event) {
+        let valid = true;
+
+        quantityInputs.forEach(input => {
+          const quantityValue = input.value.trim();
+
+          if (input.previousElementSibling.checked && !isNaN(quantityValue) && parseFloat(quantityValue) <= 0) {
+            valid = false;
+          }
+        });
+
+        if (!valid) {
+          event.preventDefault(); 
+          quantityError.style.display = "block"; 
+        } else {
+          quantityError.style.display = "none"; 
+        }
+      });
+    });

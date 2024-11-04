@@ -1,0 +1,42 @@
+doctype html
+html(lang="en")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    title Mystery App
+    link(rel="stylesheet", href="/stylesheets/style.css")
+  body
+    header
+      nav
+        ul
+          if signedIn
+            li: a(href='/') Home
+            li: a(href='/mysteries/new') Add Mystery
+            li
+              form(action="/logout" method="POST" style="display: inline;")
+                button(type="submit") Logout
+            li Logged in as: #{username}
+            if isAdmin
+              li: a(href='/clues/manage') Manage Clues
+          else
+            li: a(href='/login') Login
+            li: a(href='/register') Register
+
+    if signedIn
+      form(action="/search" method="GET" class="search-form")
+        select(name="searchType")
+          option(value="mysteries") Search Mysteries
+          option(value="clues") Search Clues
+          option(value="mysteriesByClue") Search Mysteries by Clue
+        input(type="text" name="query" placeholder="Search..." required)
+        button(type="submit") Search
+
+    if messages && Object.keys(messages).length > 0
+      each value, type in messages
+        each message in value
+          div(class=`alert alert-${type}`)= message
+
+    main
+      block content
+
+    block scripts

@@ -1,0 +1,16 @@
+extends layout
+
+block content
+  h1 Manage and Remove Clues for #{mystery.title}
+
+  form(action=`/mysteries/${mystery.id}/remove-clue` method="POST")
+    div
+      label Clue:
+      each clue in mystery.clues
+        div
+          input(type="checkbox" name="cluesToRemove[]" value=clue.id)
+          span #{clue.name} - #{clue.quantity}
+
+    button(type="submit") Remove Selected Clues
+
+  a(href=`/mysteries/${mystery.id}/edit`) Back to Edit Mystery

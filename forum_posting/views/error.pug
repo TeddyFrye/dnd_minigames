@@ -1,0 +1,24 @@
+extends layout.pug
+
+block content
+  h1 Error
+  if message
+    h2= message
+  else if error && error.status
+    if error.status == 404
+      h2 Page Not Found
+      p The page you requested does not exist. Please check the URL or go back to the homepage.
+    else if error.status == 403
+      h2 Access Denied
+      p You do not have permission to access this page. Please make sure you're logged in with the correct credentials.
+    else if error.status == 500
+      h2 Server Error
+      p An unexpected error occurred on our server. Please try again later. If the problem persists, contact support.
+    else
+      h2 An error occurred
+      p We encountered an unexpected error. Please try again later or contact support.
+  else
+    h2 An error occurred
+    p We could not process your request.
+
+  a(href='/') Return to Home Page

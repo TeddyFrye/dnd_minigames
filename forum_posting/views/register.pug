@@ -1,0 +1,43 @@
+extends layout.pug
+
+block content
+  h1 Register
+
+  if messages.error
+    each error in messages.error
+      div.alert.alert-danger= error
+
+  if messages.success
+    each success in messages.success
+      div.alert.alert-success= success
+
+  form(action="/register" method="POST" id="register-form")
+    div
+      label(for="username") Username:
+      input(type="text" name="username" value=(username || '') required)
+    div
+      label(for="password") Password:
+      input(type="password" name="password" required)
+    div
+      label(for="adminPassword") Admin Password (Optional):
+      input(type="password" name="adminPassword")
+      p#admin-error(style="color: red; display: none;") Incorrect admin password. Please try again.
+
+    button(type="submit" id="register-button") Register
+
+  script.
+    document.addEventListener("DOMContentLoaded", function() {
+      const form = document.getElementById("register-form");
+      const adminPasswordInput = document.querySelector('input[name="adminPassword"]');
+      const adminError = document.getElementById("admin-error");
+
+      form.addEventListener("submit", function(event) {
+        const adminPassword = adminPasswordInput.value.trim();
+        if (adminPassword && adminPassword !== "LaunchSchool") {
+          event.preventDefault(); 
+          adminError.style.display = "block";
+        } else {
+          adminError.style.display = "none"; 
+        }
+      });
+    });

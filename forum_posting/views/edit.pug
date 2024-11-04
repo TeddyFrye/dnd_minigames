@@ -1,0 +1,53 @@
+extends layout
+
+block content
+  h1 Edit Mystery
+
+  form(action=`/mysteries/${mystery.id}/edit` method="POST" id="edit-mystery-form")
+    div
+      label(for="title") Title:
+      input(type="text" name="title" value=mystery.title required)
+
+    div
+      label(for="description") Description:
+      textarea(name="description" required)= mystery.description
+
+    div
+      label Ingredients:
+      each ingredient in mystery.ingredients
+        div
+          span #{ingredient.name} - #{ingredient.quantity}
+          // Since removal is now on a separate page, there's no delete button here
+
+    button(type="submit") Save Changes
+
+  h2 Add New Ingredient
+  form(action=`/mysteries/${mystery.id}/add-ingredient` method="POST" id="add-ingredient-form")
+    select(name="newIngredient[id]" required)
+      option(value="" selected disabled) Select an ingredient
+      each ingredient in allIngredients
+        option(value=ingredient.id) #{ingredient.name}
+    input(type="text" name="newIngredient[quantity]" id="ingredient-quantity" placeholder="Quantity" required)
+    div(id="quantity-error" style="color: red; display: none;") Quantity must be a positive number greater than zero.
+    button(type="submit") Add Ingredient
+
+  a(href=`/mysteries/${mystery.id}/remove-ingredients`) Manage and Remove Ingredients
+
+block scripts
+  script.
+    document.addEventListener("DOMContentLoaded", function() {
+      const addIngredientForm = document.getElementById("add-ingredient-form");
+      const quantityInput = document.getElementById("ingredient-quantity");
+      const quantityError = document.getElementById("quantity-error");
+
+      addIngredientForm.addEventListener("submit", function(event) {
+        const quantityValue = quantityInput.value.trim();
+
+        if (!isNaN(quantityValue) && parseFloat(quantityValue) <= 0) {
+          event.preventDefault(); 
+          quantityError.style.display = "block"; 
+        } else {
+          quantityError.style.display = "none"; 
+        }
+      });
+    });

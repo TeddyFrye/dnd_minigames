@@ -1,0 +1,28 @@
+extends layout
+
+block content
+  h1 #{searchType || "Unknown"} Search Results for "#{query || ""}"
+  
+  if results && results.length > 0
+    ul
+      each result in results
+        if searchType === "mysteries" || searchType === "mysteriesByClue"
+          li: a(href=`/mysteries/${result.id}`) #{result.title}
+        else if searchType === "clues"
+          li #{result.name}
+  else
+    p No results found.
+
+  if totalPages > 1
+    .pagination
+      if currentPage > 1
+        a(href=`/search?searchType=${searchType}&query=${query}&page=${currentPage - 1}`) Previous
+      else
+        span Previous
+
+      | Page #{currentPage} of #{totalPages}
+
+      if currentPage < totalPages
+        a(href=`/search?searchType=${searchType}&query=${query}&page=${currentPage + 1}`) Next
+      else
+        span Next

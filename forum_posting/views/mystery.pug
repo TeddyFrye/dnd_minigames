@@ -1,0 +1,15 @@
+extends layout.pug
+
+block content
+  h1= mystery.title
+  p Description: 
+    | #{mystery.description}
+  if mystery.clues && mystery.clues.length
+    h2 Clues
+    ul
+      each clue in mystery.clues
+        li= clue.name + ' - ' + clue.quantity
+  a(href=`/mysteries/${mystery.id}/edit`) Edit Mystery
+  form(action=`/mysteries/${mystery.id}/delete` method="post")
+    input(type="hidden" name="_method" value="delete")
+    button(type="submit") Delete Mystery

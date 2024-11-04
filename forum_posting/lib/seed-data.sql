@@ -1,0 +1,88 @@
+INSERT INTO users (username, password, is_admin) VALUES
+('user1', '$2b$10$be971vHuuxcNXCYJIHJiNO4g0VrN6rt4TsURwBuKgwCue1E8.0OmK', false),
+  -- user1 password: 1234 
+('admin1', '$2b$10$vySkwBJMQVastq4UT3cN2Or3mCTGqNHMbHTnkCxnpQ3cX41A80DL2', true);
+ --  admin1 password: 12345
+
+-- Extend recipes
+INSERT INTO recipes (title, description, author_id) VALUES
+('Cheese Burger', 'Your classic American grill favorite', 1),
+('Taco', 'Because it''s Tuesday', 2),
+('Salad', 'Too many burgers, time for greens', 1),
+('Spaghetti Bolognese', 'An Italian masterpiece', 1),
+('Chicken Curry', 'Rich and creamy with a hint of spice', 2),
+('Vegetable Stir Fry', 'Quick and healthy', 1),
+('Fish Tacos', 'A lighter take on tacos with a fresh twist', 2),
+('Chocolate Cake', 'Decadent and rich chocolate dessert', 1),
+('Beef Stew', 'Hearty and comforting', 2),
+('Quiche Lorraine', 'A French classic perfect for any meal', 1),
+('Pancakes', 'Perfect for breakfast or brunch', 1),
+('Lasagna', 'Layers of pasta, meat, and cheese', 2),
+('Grilled Cheese Sandwich', 'A simple comfort food', 1),
+('Pork Chops', 'Grilled to perfection', 2),
+('Ratatouille', 'A vegetarian delight', 1),
+('Apple Pie', 'Classic dessert', 2),
+('Sushi Rolls', 'Fresh and delightful', 1),
+('Lemon Chicken', 'Tangy and tasty', 2),
+('Beef Tacos', 'Taco night with a twist', 1),
+('Greek Salad', 'Fresh with feta cheese', 2);
+
+-- Extend ingredients
+INSERT INTO ingredients (name) VALUES
+('Ground Beef'),
+('Cheese'),
+('Taco Shell'),
+('Lettuce'),
+('Tomato'),
+('Pasta'),
+('Ground Pork'),
+('Chicken Breast'),
+('Curry Powder'),
+('Broccoli'),
+('Fish Fillets'),
+('Cabbage'),
+('Chocolate'),
+('Flour'),
+('Beef Chunks'),
+('Pie Crust'),
+('Eggs'),
+('Milk'),
+('Rice'),
+('Soy Sauce'),
+('Pork'),
+('Apples');
+
+-- Extend recipeIngredients
+INSERT INTO recipeIngredients (recipe_id, ingredient_id, quantity) VALUES
+(1, 1, '1 lb'),
+(1, 2, '4 slices'),
+(2, 3, '3 shells'),
+(2, 4, '1/2 head'),
+(2, 2, 'sprinkled'),
+(3, 4, '1 head'),
+(3, 5, '2 tomatoes'),
+(4, 6, '200g'),
+(4, 7, '150g'),
+(5, 8, '2 breasts'),
+(5, 9, '1 tbsp'),
+(6, 10, '1 bunch'),
+(7, 11, '2 fillets'),
+(7, 12, '1/4 head'),
+(8, 13, '100g'),
+(8, 14, '300g'),
+(9, 15, '500g'),
+(10, 16, '1'),
+(10, 17, '3'),
+(11, 18, '1 cup'),
+(12, 6, '300g'),
+(13, 2, '2 slices'),
+(13, 18, '1 tbsp'),
+(14, 21, '2 chops'),
+(15, 20, '1 bunch'),
+(16, 22, '3 apples'),
+(17, 19, '1 roll'),
+(18, 8, '2 breasts'),
+(19, 1, '1 lb'),
+(20, 4, '1 head'),
+(20, 5, '3 tomatoes'),
+(20, 2, '200g');

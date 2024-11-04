@@ -1,0 +1,59 @@
+extends layout.pug
+
+block content
+  h1 Login
+
+  #flash-messages
+
+  form(action="/login" method="POST" id="login-form")
+    div
+      label(for="username") Username:
+      input(type="text" name="username" required)
+    div
+      label(for="password") Password:
+      input(type="password" name="password" required)
+    button(type="submit") Login
+
+  script.
+    document.addEventListener('DOMContentLoaded', () => {
+      const form = document.getElementById('login-form');
+      const flashMessages = document.getElementById('flash-messages');
+
+      form.addEventListener('submit', async (event) => {
+        event.preventDefault();
+
+        const formData = new FormData(form);
+        const data = {
+          username: formData.get('username'),
+          password: formData.get('password'),
+        };
+
+        try {
+          const response = await fetch('/login', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+          });
+
+          const result = await response.json();
+
+          flashMessages.innerHTML = '';
+
+          if (response.ok) {
+            window.location.href = result.redirectUrl;
+          } else {
+            if (result.error) {
+              const div = document.createElement('div');
+              div.className = 'alert alert-danger';
+              div.textContent = result.error;
+              flashMessages.appendChild(div);
+            }
+          }
+        } catch (error) {
+          console.error('Error during login:', error);
+          flashMessages.innerHTML = '<div class="alert alert-danger">An unexpected error occurred. Please try again.</div>';
+        }
+      });
+    });
